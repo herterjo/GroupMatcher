@@ -1,0 +1,64 @@
+{
+	"MinGroupMembers": 1,
+	"MaxGroupMembers": null,
+	"MinGroupLeaders": 1,
+	"MaxGroupLeaders": 3,
+	"MinFemaleGroupMembers": 1,
+	"MaxFemaleGroupMembers": 4,
+	"MinMaleGroupMembers": 1,
+	"MaxMaleGroupMembers": null,
+	"MinFemaleGroupLeaders": 1,
+	"MaxFemaleGroupLeaders": null,
+	"MinMaleGroupLeaders": 1,
+	"MaxMaleGroupLeaders": 2,
+	"FemaleMembers": [
+		"Eva",
+		"Bathseba"
+	],
+	"MaleMembers": [
+		"Adam",
+		"Kain",
+		"Abel"
+	],
+	"FemaleLeaders": [
+		"Esther",
+		"Sarah"
+	],
+	"MaleLeaders": [
+		"David",
+		"Saul",
+		"Salomo"
+	],
+	"GroupCount": 2,
+	"Associations": [
+		{
+			"People": [
+				"Adam",
+				"Eva"
+			],
+			"Weight": null
+		},
+		{
+			"People": [
+				"Kain",
+				"Abel"
+			],
+			"Weight": -100
+		},
+		{
+			"People": [
+				"David",
+				"Bathseba"
+			],
+			"Weight": 100
+		},
+		{
+			"People": [
+				"David",
+				"Saul",
+				"Salomo"
+			],
+			"Weight": 1
+		}
+	]
+}
