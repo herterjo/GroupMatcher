@@ -10,7 +10,7 @@ internal class Program
     {
 
 
-        var path = args.Length > 0 ? args[1] : "input.json";
+        var path = args.Length > 0 ? args[0] : "input.json";
         var config = Config.ReadConfig(path);
 
         if (config.GroupCount < 2)
