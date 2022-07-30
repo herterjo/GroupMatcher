@@ -214,6 +214,7 @@ public class Solver : Context
             foreach (var curr in peopleVars.Skip(1))
             {
                 allInSameGroup &= this.MkEq(prev, curr);
+                prev = curr;
             }
 
             uint? weight;
