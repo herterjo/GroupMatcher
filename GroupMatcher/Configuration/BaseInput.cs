@@ -5,13 +5,22 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
-namespace GroupMatcher;
-public class Config
+namespace GroupMatcher.Configuration;
+public class BaseInput
 {
+    public BaseInput()
+    {
+        FemaleMembers = Array.Empty<string>();
+        MaleMembers = Array.Empty<string>();
+        FemaleLeaders = Array.Empty<string>();
+        MaleLeaders = Array.Empty<string>();
+        ManyAssociations = Array.Empty<ManyAssociation>();
+    }
+
     public uint? MinGroupMembers { get; set; }
     public uint? MaxGroupMembers { get; set; }
 
-    public uint? MinGroupLeaders{ get; set; }
+    public uint? MinGroupLeaders { get; set; }
     public uint? MaxGroupLeaders { get; set; }
 
     public uint? MinFemaleGroupMembers { get; set; }
@@ -31,12 +40,5 @@ public class Config
     public string[] MaleLeaders { get; set; }
 
     public uint GroupCount { get; set; }
-    public Association[] Associations { get; set; }
-
-
-    public static Config ReadConfig(string filePath)
-    {
-        var contents = File.ReadAllText(filePath);
-        return JsonConvert.DeserializeObject<Config>(contents) ?? throw new InvalidDataException("Could not parse json contents of " + filePath);
-    }
+    public ManyAssociation[] ManyAssociations { get; set; }
 }

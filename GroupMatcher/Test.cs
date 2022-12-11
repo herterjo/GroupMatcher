@@ -3,41 +3,51 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GroupMatcher.Configuration;
 
 namespace GroupMatcher;
 public class Test
 {
-    public static Config GetExampleConfig()
+    public static Input GetExampleConfig()
     {
-        return new Config()
+        return new Input()
         {
-            Associations = new Association[]
+            ManyAssociations = new ManyAssociation[]
             {
-                new Association()
+                new ManyAssociation()
                 {
-                    People = new string[]{"Adam","Eva"},
+                    People = new string[] { "Adam", "Eva" },
                     Weight = null
                 },
-                new Association()
+                new ManyAssociation()
                 {
-                    People = new string[]{"Kain","Abel"},
+                    People = new string[] { "Kain", "Abel" },
                     Weight = -100
                 },
-                new Association()
+                new ManyAssociation()
                 {
-                    People = new string[]{"David","Bathseba"},
-                    Weight = 100
-                },
-                new Association()
-                {
-                    People = new string[]{"David","Saul","Salomo"},
+                    People = new string[] { "David", "Saul", "Salomo" },
                     Weight = 1
                 }
             },
-            FemaleLeaders = new string[] { "Esther", "Sarah" },
-            MaleLeaders = new string[] { "David", "Saul", "Salomo" },
-            FemaleMembers = new string[] { "Eva", "Bathseba" },
-            MaleMembers = new string[] { "Adam", "Kain", "Abel" },
+            OneToManyAssociations = new OneToManyAssociation[]
+            {
+                new OneToManyAssociation()
+                {
+                    FromPerson = "David",
+                    Weight = 100,
+                    ToPersons = new string[] { "Bathseba" }
+                }, new OneToManyAssociation()
+                {
+                    FromPerson = "Abraham",
+                    Weight = 200,
+                    ToPersons = new string[] { "Sarah", "Hagar" }
+                }
+            },
+            FemaleLeaders = new string[] { "Esther", "Sarah", "Hagar" },
+            MaleLeaders = new string[] { "David", "Saul", "Salomo", "Abraham" },
+            FemaleMembers = new string[] { "Eva", "Bathseba",  },
+            MaleMembers = new string[] { "Adam", "Kain", "Abel"},
             GroupCount = 2,
             MaxFemaleGroupLeaders = null,
             MaxFemaleGroupMembers = 4,

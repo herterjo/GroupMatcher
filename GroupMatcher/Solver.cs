@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using GroupMatcher.Configuration;
 using Microsoft.Z3;
 
 namespace GroupMatcher;
 public class Solver : Context
 {
-    private readonly Config Config;
+    private readonly BaseInput Config;
     private readonly IEnumerable<IntNum> GroupEnumerable;
     private readonly IntExpr[] FemaleMembers;
     private readonly IntExpr[] MaleMembers;
@@ -18,7 +19,7 @@ public class Solver : Context
     private readonly IntNum Zero;
     private readonly IntNum One;
 
-    public Solver(Config config) : base(new Dictionary<string, string>() { { "model", "true" } })
+    public Solver(BaseInput config) : base(new Dictionary<string, string>() { { "model", "true" } })
     {
         this.Config = config ?? throw new ArgumentNullException(nameof(config));
         this.GroupEnumerable = Enumerable.Repeat(0, (int)Config.GroupCount).Select((_, index) => this.MkInt(index)).ToList();
@@ -183,15 +184,15 @@ public class Solver : Context
 
     private IEnumerable<(BoolExpr Assert, uint? Weight, string Group)> GetAssociationExpressions()
     {
-        if (Config.Associations == null || !Config.Associations.Any())
+        if (Config.ManyAssociations == null || !Config.ManyAssociations.Any())
         {
             return Enumerable.Empty<(BoolExpr Assert, uint? Weight, string Group)>();
         }
 
-        var allPeopleVars = FemaleMembers.Concat(MaleMembers).Concat(FemaleLeaders).Concat(MaleLeaders).ToDictionary(p => p.ToString(), p => p);
+        var allPeopleVars = FemaleMembers.Concat(MaleMembers).Concat(FemaleLeaders).Concat(MaleLeaders).ToDictionary(p => p.ToReadableString(), p => p);
 
         var expressions = new LinkedList<(BoolExpr Assert, uint? Weight, string Group)>();
-        foreach (var association in Config.Associations)
+        foreach (var association in Config.ManyAssociations)
         {
             if (association.People == null || !association.People.Any())
             {
@@ -203,6 +204,10 @@ public class Solver : Context
                 if (allPeopleVars.TryGetValue(person, out var personVar))
                 {
                     peopleVars.Add(personVar);
+                } 
+                else
+                {
+                    throw new ArgumentException("Could not get matching person from people list: " + person);
                 }
             }
             if (peopleVars.Count < 2)
@@ -301,17 +306,21 @@ public class Solver : Context
 
     private IntExpr[] GetZ3Variables(string[] people)
     {
-        return people.Select(this.MkIntConst).ToArray();
+        return people.Distinct().Select(this.MkIntConst).ToArray();
     }
 
     private static Dictionary<int, string[]> GetGrouped(Model model, IntExpr[] expr)
     {
-        return expr.Select(e => GetEvaluated(model, e)).GroupBy(r => r.Group).ToDictionary(g => g.Key, g => g.Select(r => r.Name).ToArray());
+        return expr.Select(e => GetEvaluated(model, e))
+            .GroupBy(r => r.Group)
+            .ToDictionary(
+                g => g.Key, 
+                g => g.Select(r => r.Name).ToArray());
     }
 
     private static (int Group, string Name) GetEvaluated(Model model, IntExpr expr)
     {
-        return (((IntNum)model.Eval(expr)).Int, expr.ToString());
+        return (((IntNum)model.Eval(expr)).Int, expr.ToReadableString());
     }
 
     private static string GetEntryOrDefault(Dictionary<int, string[]> groupsMembers, int group, int peopleIndex, string defaultReturn = "")

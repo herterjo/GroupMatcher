@@ -4,9 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GroupMatcher;
-public class Association
+namespace GroupMatcher.Configuration;
+public class BaseAssociation
 {
-    public string[] People { get; set; }
     public int? Weight { get; set; }
 }
