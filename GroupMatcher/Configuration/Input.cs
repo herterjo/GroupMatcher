@@ -14,6 +14,7 @@ public class Input : BaseInput
     }
 
     public OneToManyAssociation[] OneToManyAssociations { get; set; }
+    public int MultipleAssociationsPenalty { get; set; }
 
     public BaseInput ToBaseInput()
     {
@@ -23,9 +24,9 @@ public class Input : BaseInput
         var newAssociations = this.OneToManyAssociations
             .Where(a => a.FromPerson != null && a.ToPersons != null && a.ToPersons.Any())
             .SelectMany(a => a.ToPersons
-                .Select(p => new ManyAssociation()
+                .Select((p, index) => new ManyAssociation()
                 {
-                    Weight = a.Weight,
+                    Weight = GetWeight(a.Weight, index),
                     People = new string[] { a.FromPerson, p }
                 }));
         baseInput.ManyAssociations = baseInput.ManyAssociations.Concat(newAssociations).ToArray();
@@ -36,5 +37,31 @@ public class Input : BaseInput
     {
         var contents = File.ReadAllText(filePath);
         return JsonConvert.DeserializeObject<Input>(contents) ?? throw new InvalidDataException("Could not parse json contents of " + filePath);
+    }
+
+    public int? GetWeight(int? baseWeight, int index)
+    {
+        if (!baseWeight.HasValue || MultipleAssociationsPenalty == 0 || index == 0 || (baseWeight < 1 && baseWeight > -1))
+        {
+            return baseWeight;
+        }
+
+        var negativeWeight = baseWeight.Value < 0;
+        var correctPrefixPenalty = negativeWeight ? (-1) * this.MultipleAssociationsPenalty : this.MultipleAssociationsPenalty;
+        var multipliedPenalty = index * correctPrefixPenalty;
+        var negativePenalty = multipliedPenalty < 0;
+        if (((negativeWeight && !negativePenalty) || (!negativeWeight && negativePenalty))
+            && Math.Abs(baseWeight.Value) <= Math.Abs(multipliedPenalty))
+        {
+            return baseWeight;
+        }
+        try
+        {
+            return checked(baseWeight.Value + multipliedPenalty);
+        }
+        catch (OverflowException)
+        {
+            return negativeWeight ? Int32.MinValue : Int32.MaxValue;
+        }
     }
 }
