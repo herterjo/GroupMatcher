@@ -53,7 +53,7 @@ public class Input : BaseInput
         if (((negativeWeight && !negativePenalty) || (!negativeWeight && negativePenalty))
             && Math.Abs(baseWeight.Value) <= Math.Abs(multipliedPenalty))
         {
-            return baseWeight;
+            return negativeWeight ? -1 : 1;
         }
         try
         {
