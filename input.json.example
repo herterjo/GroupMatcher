@@ -2,7 +2,7 @@
 	"MinGroupMembers": 1,
 	"MaxGroupMembers": null,
 	"MinGroupLeaders": 1,
-	"MaxGroupLeaders": 4,
+	"MaxGroupLeaders": 3,
 	"MinFemaleGroupMembers": 1,
 	"MaxFemaleGroupMembers": 4,
 	"MinMaleGroupMembers": 1,
@@ -11,6 +11,14 @@
 	"MaxFemaleGroupLeaders": null,
 	"MinMaleGroupLeaders": 1,
 	"MaxMaleGroupLeaders": 2,
+	"GroupCount": 2,
+	"MultipleAssociationsPenalty": -1,
+	"GroupMembersVariance": 1,
+    "GroupLeadersVariance": null,
+    "FemaleGroupMembersVariance": 1,
+    "MaleGroupMembersVariance": null,
+    "FemaleGroupLeadersVariance": null,
+    "MaleGroupLeadersVariance": 2,
 	"FemaleMembers": [
 		"Eva",
 		"Bathseba"
@@ -22,17 +30,14 @@
 	],
 	"FemaleLeaders": [
 		"Esther",
-		"Sarah",
-		"Hagar"
+		"Sarah"
 	],
 	"MaleLeaders": [
 		"David",
 		"Saul",
-		"Salomo",
-		"Abraham"
+		"Salomo"
 	],
-	"GroupCount": 2,
-	"ManyAssociations": [
+	"Associations": [
 		{
 			"People": [
 				"Adam",
@@ -50,27 +55,17 @@
 		{
 			"People": [
 				"David",
-				"Saul",
-				"Salomo"
-			],
-			"Weight": 1
-		}
-	],
-	"OneToManyAssociations": [
-		{
-			"FromPerson": "David",
-			"ToPersons": [
 				"Bathseba"
 			],
 			"Weight": 100
 		},
 		{
-			"FromPerson": "Abraham",
-			"ToPersons": [
-				"Sarah",
-				"Hagar"
+			"People": [
+				"David",
+				"Saul",
+				"Salomo"
 			],
-			"Weight": 200
+			"Weight": 1
 		}
 	]
 }
