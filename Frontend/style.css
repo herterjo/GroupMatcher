@@ -1,0 +1,43 @@
+﻿label {
+    display: block;
+}
+
+input {
+    display: block;
+    margin-bottom: 20px;
+}
+
+textarea {
+    display: block;
+    width: 80%;
+    margin-bottom: 20px;
+}
+
+input[type=number] {
+    width: 60px; 
+}
+
+.section {
+    border: solid 1px grey;
+    padding: 10px;
+}
+
+button {
+    margin: 10px;
+}
+
+.spacing {
+    margin: 10px;
+}
+
+#fromPersonTh {
+    width: 30%;
+}
+
+#toPersonsTh {
+    width: 50%;
+}
+
+#deleteTh {
+    width: 10%;
+}

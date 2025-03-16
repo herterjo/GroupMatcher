@@ -1,0 +1,116 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="style.css">
+    <link href="libraries/selectize.default.css" rel="stylesheet" />
+    <script src="libraries/jquery.min.js"></script>
+    <script src="libraries/selectize.min.js"></script>
+    <title>Group Matcher - JSON Generator</title>
+</head>
+<body>
+    <h1>JSON Generator</h1>
+
+    <h2>Numerische Grundeinstellungen</h2>
+    <div class="section" id="singleValues">
+        <label for="MinGroupMembers">Minimale Anzahl an Mitgliedern, die eine Gruppe haben muss</label>
+        <input id="MinGroupMembers" type="number" step="1" value="1" min="0" />
+
+        <label for="MaxGroupMembers">Maximale Anzahl an Mitgliedern, die eine Gruppe haben kann</label>
+        <input id="MaxGroupMembers" type="number" step="1" value="2" min="0" />
+
+        <label for="MinGroupLeaders">Minimale Anzahl an Leitern, die eine Gruppe haben muss</label>
+        <input id="MinGroupLeaders" type="number" step="1" value="1" min="0" />
+
+        <label for="MaxGroupLeaders">Maximale Anzahl an Leitern, die eine Gruppe haben kann</label>
+        <input id="MaxGroupLeaders" type="number" step="1" value="2" min="0" />
+
+        <label for="MinFemaleGroupMembers">Minimale Anzahl an weiblichen Mitgliedern, die eine Gruppe haben muss</label>
+        <input id="MinFemaleGroupMembers" type="number" step="1" value="1" min="0" />
+
+        <label for="MaxFemaleGroupMembers">Maximale Anzahl an weiblichen Mitgliedern, die eine Gruppe haben kann</label>
+        <input id="MaxFemaleGroupMembers" type="number" step="1" value="1" min="0" />
+
+        <label for="MinMaleGroupMembers">Minimale Anzahl an männlichen Mitgliedern, die eine Gruppe haben muss</label>
+        <input id="MinMaleGroupMembers" type="number" step="1" value="1" min="0" />
+
+        <label for="MaxMaleGroupMembers">Maximale Anzahl an männlichen Mitgliedern, die eine Gruppe haben kann</label>
+        <input id="MaxMaleGroupMembers" type="number" step="1" value="1" min="0" />
+
+        <label for="MinFemaleGroupLeaders">Minimale Anzahl an weiblichen Leitern, die eine Gruppe haben muss</label>
+        <input id="MinFemaleGroupLeaders" type="number" step="1" value="1" min="0" />
+
+        <label for="MaxFemaleGroupLeaders">Maximale Anzahl an weiblichen Leitern, die eine Gruppe haben kann</label>
+        <input id="MaxFemaleGroupLeaders" type="number" step="1" value="1" min="0" />
+
+        <label for="MinMaleGroupLeaders">Minimale Anzahl an männlichen Leitern, die eine Gruppe haben muss</label>
+        <input id="MinMaleGroupLeaders" type="number" step="1" value="1" min="0" />
+
+        <label for="MaxMaleGroupLeaders">Maximale Anzahl an männlichen Leitern, die eine Gruppe haben kann</label>
+        <input id="MaxMaleGroupLeaders" type="number" step="1" value="1" min="0" />
+
+        <label for="GroupCount">Anzahl an Gruppen</label>
+        <input id="GroupCount" type="number" step="1" value="2" min="1" />
+
+        <label for="MultipleAssociationsPenalty">Wie sollen sich weitere Gruppenwünsche auf die Gewichtung auswirken? Leer lassen oder 0 wirkt sich nicht aus. Die eingetragene Zahl multipliziert mit der Stelle des Gruppenwunsch in der Liste der Person ergibt die neue Gewichtung</label>
+        <input id="MultipleAssociationsPenalty" type="number" step="1" value="-1" />
+
+        <label for="GroupMembersVariance">Um wie viele Mitglieder darf die Anzahl der Leute in einer Gruppe vom gewünschten Wert abweichen</label>
+        <input id="GroupMembersVariance" type="number" step="1" value="2" min="0" />
+
+        <label for="GroupLeadersVariance">Um wie viele Leiter darf die Anzahl der Leute in einer Gruppe vom gewünschten Wert abweichen</label>
+        <input id="GroupLeadersVariance" type="number" step="1" value="1" min="0" />
+
+        <label for="FemaleGroupMembersVariance">Um wie viele weibliche Mitglieder darf die Anzahl der Leute in einer Gruppe vom gewünschten Wert abweichen</label>
+        <input id="FemaleGroupMembersVariance" type="number" step="1" value="1" min="0" />
+
+        <label for="MaleGroupMembersVariance">Um wie viele männliche Mitglieder darf die Anzahl der Leute in einer Gruppe vom gewünschten Wert abweichen</label>
+        <input id="MaleGroupMembersVariance" type="number" step="1" value="1" min="0" />
+
+        <label for="FemaleGroupLeadersVariance">Um wie viele weibliche  Leiter darf die Anzahl der Leute in einer Gruppe vom gewünschten Wert abweichen</label>
+        <input id="FemaleGroupLeadersVariance" type="number" step="1" value="1" min="0" />
+
+        <label for="MaleGroupLeadersVariance">Um wie viele weibliche  Leiter darf die Anzahl der Leute in einer Gruppe vom gewünschten Wert abweichen</label>
+        <input id="MaleGroupLeadersVariance" type="number" step="1" value="1" min="0" />
+    </div>
+
+    <h2>Listen aller Leute</h2>
+    <div class="section" id="PeopleLists">
+        Die Änderungen werden erst übernommen, sobald eine Zeile eingefügt oder gelöscht wird
+        <div class="spacing"></div>
+        <label for="FemaleMembers">Alle weiblichen Mitglieder, jeweils in einer neuen Zeile</label>
+        <textarea id="FemaleMembers"></textarea>
+
+        <label for="MaleMembers">Alle männlichen Mitglieder, jeweils in einer neuen Zeile</label>
+        <textarea id="MaleMembers"></textarea>
+
+        <label for="FemaleLeaders">Alle weiblichen Leiter, jeweils in einer neuen Zeile</label>
+        <textarea id="FemaleLeaders"></textarea>
+
+        <label for="MaleLeaders">Alle männlichen Leiter, jeweils in einer neuen Zeile</label>
+        <textarea id="MaleLeaders"></textarea>
+    </div>
+
+    <h2>Gruppenwünsche</h2>
+    <button id="NewGroupAssociation" onclick="addNewGroupAssociationManually()">+ Neuer Gruppenwunsch</button>
+    <div class="section" id="GroupAssociations">
+        Die Gewichtung kann positiv oder negativ sein. Falls sie fehlt, dann ist dies ein Gruppenwunsch, der zwingend erfüllt werden muss.
+        <table id="GroupAssociationsTable">
+            <tr>
+                <th id="fromPersonTh">Von</th>
+                <th id="toPersonsTh">Wünscht sich</th>
+                <th>Gewichtung</th>
+                <th id="deleteTh"></th>
+            </tr>
+        </table>
+    </div>
+    <button id="NewGroupAssociation" onclick="addNewGroupAssociationManually()">+ Neuer Gruppenwunsch</button>
+
+    <div class="spacing"></div>
+
+    <label for="JsonOutput">Repräsentation als JSON für den GroupMatcher</label>
+    <button onclick="copyJsonToClipBoard()">JSON in die Zwischenablage übernehmen</button>
+    <textarea id="JsonOutput"></textarea>
+
+    <script src="app.js"></script>
+</body>
+</html>
