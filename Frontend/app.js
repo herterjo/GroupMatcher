@@ -306,7 +306,7 @@ function inputToJson() {
 
         const memberLists = getMemberListTextAreas();
         memberLists.forEach(memberList => {
-            resultingObject[memberList.id] = getListFromTextArea(memberList);
+            resultingObject[memberList.id] = getListFromTextArea(memberList, true);
         });
 
         resultingObject.OneToManyAssociations = [];
