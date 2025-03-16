@@ -34,6 +34,10 @@ $(() => {
     jsonToInput();
 });
 
+function togglePanel(id) {
+    $("#" + id).slideToggle(500);
+}
+
 function addNewGroupAssociationManually(elementOnTop) {
     const newRow = addNewGroupAssociation();
     newRow.scrollIntoView({behavior: "smooth", block: "center"});
@@ -204,7 +208,7 @@ function copyJsonToClipBoard() {
 }
 
 function jsonToInput() {
-    if (disableRendering === true) {
+    if (disableRendering === true || !jsonOutputTextArea.value) {
         return;
     }
 
@@ -212,7 +216,7 @@ function jsonToInput() {
 
     try {
         const jsonObject = JSON.parse(jsonOutputTextArea.value);
-        const inputs = Array.from(document.getElementById("singleValues").getElementsByTagName("input"));
+        const inputs = Array.from(document.getElementById("SingleValues").getElementsByTagName("input"));
         inputs.forEach(input => {
             const jsonObjectValue = jsonObject[input.id];
             input.value = getInputFromJsonSingleValue(jsonObjectValue);
@@ -294,7 +298,7 @@ function inputToJson() {
     disableRendering = true;
 
     try {
-        const inputs = Array.from(document.getElementById("singleValues").getElementsByTagName("input"));
+        const inputs = Array.from(document.getElementById("SingleValues").getElementsByTagName("input"));
         const resultingObject = {};
         inputs.forEach(input => {
             resultingObject[input.id] = getIntFromInput(input);
@@ -350,4 +354,17 @@ function getIntFromInput(input) {
         return null;
     }
     return Number.parseInt(stringValue);
+}
+
+function download() {
+    var element = document.createElement('a');
+    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(jsonOutputTextArea.value));
+    element.setAttribute('download', "input.json");
+
+    element.style.display = 'none';
+    document.body.appendChild(element);
+
+    element.click();
+
+    document.body.removeChild(element);
 }
