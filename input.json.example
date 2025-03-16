@@ -37,7 +37,7 @@
 		"Saul",
 		"Salomo"
 	],
-	"Associations": [
+	"ManyAssociations": [
 		{
 			"People": [
 				"Adam",
@@ -62,6 +62,37 @@
 		{
 			"People": [
 				"David",
+				"Saul",
+				"Salomo"
+			],
+			"Weight": 1
+		}
+	],
+	"OneToManyAssociations": [
+		{
+			"FromPerson": "Adam",
+			"ToPersons": [
+				"Eva"
+			],
+			"Weight": null
+		},
+		{
+			"FromPerson": "Kain",
+			"ToPersons": [
+				"Abel"
+			],
+			"Weight": -100
+		},
+		{
+			"FromPerson": "David",
+			"ToPersons": [
+				"Bathseba"
+			],
+			"Weight": 100
+		},
+		{
+			"FromPerson": "David",
+			"ToPersons": [
 				"Saul",
 				"Salomo"
 			],
